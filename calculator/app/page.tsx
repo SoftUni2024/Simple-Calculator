@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Funnel, BriefcaseBusiness, UserRound, Trophy } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { NativeSelect } from '@/components/ui/native-select';
 import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
@@ -196,16 +195,6 @@ export default function Home() {
               />
             </div>
           </label>
-          <Button type="button" variant="outline" onClick={() => {
-            R('10000');
-            O('1000');
-            S('2026-05-08');
-            E('2026-11-04');
-            A(40);
-            B(20);
-          }}>
-            {t('Reset campaign', 'Нулиране на кампанията')}
-          </Button>
         </form>
       </aside>
       <section className="workspace" aria-label={t('Campaign forecast', 'Прогноза за кампанията')}>
