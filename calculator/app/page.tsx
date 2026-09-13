@@ -18,6 +18,9 @@ export default function Home() {
     [lead, A] = useState(40),
     [prospect, B] = useState(20);
   const t = (en: string, bg: string) => (lang === 'bg' ? bg : en);
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
   const forecast = revenue.trim() !== '' && order.trim() !== ''
     ? calculateForecast({ revenue: Number(revenue), averageOrderValue: Number(order), leadResponseRate: lead, prospectResponseRate: prospect })
     : null;
@@ -111,7 +114,7 @@ export default function Home() {
     <main className="calculator">
       <aside>
         <h1>
-          <Funnel />
+          <Funnel aria-hidden="true" />
           <span>
             <b>Lead</b>Predictor
           </span>
@@ -145,6 +148,8 @@ export default function Home() {
             <Input
               type="date"
               value={start}
+              aria-invalid={!dates}
+              aria-describedby={!dates ? 'forecast-feedback' : undefined}
               max={end || undefined}
               onChange={(e) => S(e.target.value)}
             />
@@ -154,6 +159,8 @@ export default function Home() {
             <Input
               type="date"
               value={end}
+              aria-invalid={!dates}
+              aria-describedby={!dates ? 'forecast-feedback' : undefined}
               min={start || undefined}
               onChange={(e) => E(e.target.value)}
             />
@@ -167,6 +174,8 @@ export default function Home() {
                 min="0"
                 step="any"
                 value={revenue}
+                aria-invalid={!valid}
+                aria-describedby={!valid ? 'forecast-feedback' : undefined}
                 onChange={(e) => R(e.target.value)}
               />
             </div>
@@ -180,13 +189,15 @@ export default function Home() {
                 min="0.01"
                 step="any"
                 value={order}
+                aria-invalid={!valid}
+                aria-describedby={!valid ? 'forecast-feedback' : undefined}
                 onChange={(e) => O(e.target.value)}
               />
             </div>
           </label>
         </form>
       </aside>
-      <section className="workspace" aria-label="Campaign forecast">
+      <section className="workspace" aria-label={t('Campaign forecast', 'Прогноза за кампанията')}>
         <div className="panel forecast">
           <div className="chart-area">
             <div className="chart-heading">
@@ -324,7 +335,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <p className="note" role="status">
+        <p className="note" id="forecast-feedback" role="status" aria-atomic="true">
           {!valid
             ? t(
                 'Enter a non-negative revenue and an average order value greater than zero.',
