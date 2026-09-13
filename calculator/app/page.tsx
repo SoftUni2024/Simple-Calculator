@@ -7,6 +7,7 @@ import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
 import { ChartContainer } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { calculateForecast } from '@/lib/forecast';
 export default function Home() {
   const [lang, L] = useState('en'),
     [currency, C] = useState('USD'),
@@ -17,15 +18,11 @@ export default function Home() {
     [lead, A] = useState(40),
     [prospect, B] = useState(20);
   const t = (en: string, bg: string) => (lang === 'bg' ? bg : en);
-  const valid =
-    revenue.trim() !== '' &&
-    order.trim() !== '' &&
-    Number(revenue) >= 0 &&
-    Number(order) > 0 &&
-    Number.isFinite((Number(revenue) / Number(order)) * 10000);
-  const customers = valid ? Number(revenue) / Number(order) : 0,
-    leads = (customers * 100) / lead,
-    prospects = (leads * 100) / prospect;
+  const forecast = revenue.trim() !== '' && order.trim() !== ''
+    ? calculateForecast({ revenue: Number(revenue), averageOrderValue: Number(order), leadResponseRate: lead, prospectResponseRate: prospect })
+    : null;
+  const valid = forecast !== null;
+  const { customers, leads, prospects } = forecast ?? { customers: 0, leads: 0, prospects: 0 };
   const dates = Boolean(start && end && end >= start),
     months = dates
       ? Math.max(
