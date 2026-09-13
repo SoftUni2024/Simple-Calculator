@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculate the customers, leads, and prospects needed to reach your revenue goal.">
+  <title>LeadPredictor — Campaign Calculator</title>
+  <link rel="icon" href="calculator/public/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="scripts.js" defer></script>
+</head>
+<body>
+  <main class="calculator">
+    <aside>
+      <h1><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18l-7 8v7l-4 2v-9z" fill="currentColor"/></svg><span><b>Lead</b>Predictor</span></h1>
+      <form class="panel settings" id="settings">
+        <label><span data-text="language">Language</span><select id="language"><option value="en">🇺🇸 English</option><option value="bg">🇧🇬 Български</option></select></label>
+        <label><span data-text="currency">Currency</span><select id="currency"><option value="USD">$ US Dollar</option><option value="EUR">€ Euro</option><option value="GBP">£ British Pound</option></select></label>
+        <label><span data-text="start">Campaign Start</span><input id="start" type="date" value="2026-05-08" required></label>
+        <label><span data-text="end">Campaign End</span><input id="end" type="date" value="2026-11-04" required></label>
+        <label><span data-text="revenue">Total Revenue</span><span class="money"><span class="currency-symbol" aria-hidden="true">$</span><input id="revenue" type="number" min="0" step="any" value="10000" required></span></label>
+        <label><span data-text="order">Avg. Order Value</span><span class="money"><span class="currency-symbol" aria-hidden="true">$</span><input id="order" type="number" min="0.01" step="any" value="1000" required></span></label>
+      </form>
+    </aside>
+    <section class="workspace" aria-label="Campaign forecast" id="forecast-region">
+      <div class="panel forecast">
+        <div class="chart-area">
+          <div class="chart-heading"><span data-text="forecast">CAMPAIGN FORECAST</span><span id="duration">6 months</span></div>
+          <svg id="chart" class="campaign-chart" viewBox="0 0 420 300" role="img" aria-labelledby="chart-title chart-description"><title id="chart-title">Cumulative campaign targets</title><desc id="chart-description">Prospects, leads, and customers needed by campaign month.</desc><g id="chart-content"></g></svg>
+          <div class="legend"><span><i style="background:#667180"></i><span data-text="prospects">Prospects</span></span><span><i style="background:#8b96a6"></i><span data-text="leads">Leads</span></span><span><i style="background:#bdc6d2"></i><span data-text="customers">Customers</span></span></div>
+        </div>
+        <div class="cards" aria-live="polite" aria-atomic="true">
+          <section class="metric metric-0"><div class="metric-title"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 3h8v3h5v14H3V6h5zm2 3h4V5h-4zM5 11v2h14v-2z"/></svg><h2 data-text="prospects">Prospects</h2><span id="prospects-percent">100%</span></div><strong id="prospects-value">125</strong><div class="meter" aria-hidden="true"><span id="prospects-meter" style="width:100%"></span></div></section>
+          <section class="metric metric-1"><div class="metric-title"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M4 21v-3a8 8 0 0 1 16 0v3z" fill="currentColor"/></svg><h2 data-text="leads">Leads</h2><span id="leads-percent">20%</span></div><strong id="leads-value">25</strong><div class="meter" aria-hidden="true"><span id="leads-meter" style="width:20%"></span></div></section>
+          <section class="metric metric-2"><div class="metric-title"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3h12v2h4v4a5 5 0 0 1-5 5 7 7 0 0 1-4 3v3h5v2H6v-2h5v-3a7 7 0 0 1-4-3 5 5 0 0 1-5-5V5h4zm0 4H4v2a3 3 0 0 0 2 3zm12 0v5a3 3 0 0 0 2-3V7z"/></svg><h2 data-text="customers">Customers</h2><span id="customers-percent">8%</span></div><strong id="customers-value">10</strong><div class="meter" aria-hidden="true"><span id="customers-meter" style="width:8%"></span></div></section>
+        </div>
+      </div>
+      <div class="panel rates">
+        <div class="rate"><label for="lead-rate" data-text="leadRate">Lead Response Rate</label><input id="lead-rate" type="range" min="1" max="100" value="40"><output for="lead-rate" id="lead-output">40.00%</output></div>
+        <div class="rate"><label for="prospect-rate" data-text="prospectRate">Prospect Response Rate</label><input id="prospect-rate" type="range" min="1" max="100" value="20"><output for="prospect-rate" id="prospect-output">20.00%</output></div>
+      </div>
+      <p class="note" id="feedback" role="status" aria-atomic="true"></p>
+      <noscript>Please enable JavaScript to calculate your campaign targets.</noscript>
+    </section>
+  </main>
+</body>
+</html>

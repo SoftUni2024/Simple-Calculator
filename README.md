@@ -2,7 +2,17 @@
 
 A responsive campaign calculator inspired by the provided screenshot.
 
-## Run
+## Open the website (no installation needed)
+
+Double-click **index.html** in the project root to open the working calculator in your browser. Keep `styles.css` and `scripts.js` alongside it. The page works offline, including the calculations, chart, date controls, sliders, language selector, and currency labels. No server or Node.js installation is required for this version.
+
+The root website files are:
+
+- `index.html` — calculator page
+- `styles.css` — responsive dark layout
+- `scripts.js` — calculations, validation, chart, and interactions
+
+## Run the React development version (optional)
 
     cd calculator
     npm install
@@ -50,4 +60,6 @@ To inspect the history locally:
     git log --graph --oneline --all
     git log main --grep=Revert
 
-All six formula tests run against the same module imported by the calculator, covering the screenshot values, fractional precision, zero revenue, full response rates, invalid inputs, and overflow.
+The test suite covers the screenshot values, fractional precision, zero revenue, full response rates, invalid inputs, and overflow. Additional tests check that the standalone website matches the React calculator and that campaign chart dates and totals are correct.
+
+The follow-up `fix/standalone-calculator-entry` branch adds the directly openable root website through another pull request. The original five branches and revert history remain intact.
